@@ -15,6 +15,11 @@ rm ./wordpress.tar.gz
 chown -R www-data:www-data $LOCALHOST
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/CN=localhost"
 ln -s /etc/nginx/sites-available/localhost.conf /etc/nginx/sites-enabled/localhost.conf
+if [ "$aauuttoo" != "1" ]
+	then
+	echo $aauuttoo
+	sed -Ei 's/\tautoindex on;/\tautoindex off;/g' /etc/nginx/sites-available/localhost.conf
+fi
 service php7.3-fpm start
 service nginx start
 
